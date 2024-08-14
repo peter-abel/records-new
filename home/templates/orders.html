@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en"> 
+<head>
+    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="{% static 'plugins/fontawesome/js/all.min.js' %}"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="{% static 'css/portal.css' %}">
+	<link  rel="stylesheet" href="{% static 'css/form.css' %}">
+
+</head> 
+
+<body class="app">   	
+    <header class="app-header fixed-top">	   	            
+        
+        <div id="app-sidepanel" class="app-sidepanel sidepanel-hidden"> 
+	        <div id="sidepanel-drop" class="sidepanel-drop"></div>
+	        <div class="sidepanel-inner d-flex flex-column">
+		        <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+		        <div class="app-branding">
+		            <a class="app-logo" href="{% url 'home'%}"><img class="logo-icon me-2" src="{% static 'images/app-logo.svg' %}" alt="logo"><span class="logo-text">PORTAL</span></a>
+	
+		        </div><!--//app-branding-->  
+			    <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+				    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+					    <li class="nav-item">
+					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+					        <a class="nav-link" href="{% url 'orders'%}">
+						        <span class="nav-icon">
+						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
+		  <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+		</svg>
+						         </span>
+		                         <span class="nav-link-text">Home</span>
+					        </a><!--//nav-link-->
+					    </li><!--//nav-item-->
+					    <li class="nav-item">
+					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+					        
+					    </li><!--//nav-item-->
+					    <li class="nav-item">
+					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+					        <a class="nav-link active" href="{% url 'orders'%}">
+						        <span class="nav-icon">
+						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+  <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+  <circle cx="3.5" cy="5.5" r=".5"/>
+  <circle cx="3.5" cy="8" r=".5"/>
+  <circle cx="3.5" cy="10.5" r=".5"/>
+</svg>
+						         </span>
+		                         <span class="nav-link-text">Orders</span>
+					        </a><!--//nav-link-->
+					    </li><!--//nav-item-->
+					    <!--//nav-item-->
+					    <li class="nav-item">
+					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+					        
+					    </li><!--//nav-item-->
+				    </ul><!--//app-menu-->
+			    </nav><!--//app-nav-->
+			    <div class="app-sidepanel-footer">
+				    <nav class="app-nav app-nav-footer">
+					    <ul class="app-menu footer-menu list-unstyled">
+						    <li class="nav-item">
+						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+						        
+						    </li><!--//nav-item-->
+						    <!--//nav-item-->
+						    <li class="nav-item">
+						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+						        <a class="nav-link" href="{% url 'orders'%}">
+							        <span class="nav-icon">
+							            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path fill-rule="evenodd" d="M12 1H4a1 1 0 0 0-1 1v10.755S4 11 8 11s5 1.755 5 1.755V2a1 1 0 0 0-1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+	  <path fill-rule="evenodd" d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+	</svg>
+							        </span>
+			                        <span class="nav-link-text">Notifications</span>
+						        </a><!--//nav-link-->
+						    </li><!--//nav-item-->
+					    </ul><!--//footer-menu-->
+				    </nav>
+			    </div><!--//app-sidepanel-footer-->
+	        </div><!--//sidepanel-inner-->
+	    </div><!--//app-sidepanel-->
+    </header><!--//app-header-->
+	
+    
+    <div class="app-wrapper">
+		<div class="header-container">
+			
+			<div class="auth-buttons">
+				{% if user.is_authenticated %}
+					<span>Welcome, {{ user.username }}</span>
+					<a href="{% url 'logout' %}" class="btn btn-outline-primary btn-sm">Log Out</a>
+				{% else %}
+					<a href="{% url 'signup' %}" class="btn btn-primary btn-sm mr-2">Sign Up</a>
+					<a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Log In</a>
+				{% endif %}
+			</div>
+		</div>
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    
+			    <div class="row g-3 mb-4 align-items-center justify-content-between">
+				    <div class="col-auto">
+			            <h1 class="app-page-title mb-0">Orders</h1>
+				    </div>
+				    <div class="col-auto">
+					     <div class="page-utilities">
+						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+							    <div class="col-auto">
+								    <form class="table-search-form row gx-1 align-items-center">
+					                    <div class="col-auto">
+					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
+					                    </div>
+					                    <div class="col-auto">
+											<!-- center modal -->
+								
+													
+														
+														<!-- Button trigger modal -->
+														<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#centerModal">
+															Export Orders
+														</button>
+														
+														<!-- Modal -->
+														<div class="modal fade" id="centerModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog modal-dialog-centered">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="exampleModalLabel">Export Orders</h5>
+																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																	</div>
+																	<div class="modal-body">
+																		<p>Download SpreadSheet File.</p>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+																		<a class="btn app-btn-secondary" href="{% url 'excel' %}" style="background-color: rgb(144, 185, 144); color: white;"></a>
+																		<!--<button type="button" class="btn btn-primary">Download Excel</button> -->
+																	</div>
+																</div>
+															</div>
+														</div>
+													
+												
+					                        <button type="submit" class="btn app-btn-secondary" data-bs-toggle="modal" >Search</button>
+					                    </div>
+					                </form>
+					                
+							    </div><!--//col-->
+							    <div class="col-auto">
+								    
+								    <select class="form-select w-auto" >
+										  <option selected value="option-1">All</option>
+										  <option value="option-2">This week</option>
+										  <option value="option-3">This month</option>
+										  <option value="option-4">Last 3 months</option>
+										  
+									</select>
+							    </div>
+							    <div class="col-auto">						    
+								    <a class="btn app-btn-secondary" href="{% url 'form' %}" style="background-color: green; color: white;">
+									    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		  <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+		  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+		</svg>
+									    Add New Order
+									</a>
+							    </div>
+						    </div><!--//row-->
+					    </div><!--//table-utilities-->
+				    </div><!--//col-auto-->
+			    </div><!--//row-->
+			   
+			    
+			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
+				    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Pending</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-rollover-tab" data-bs-toggle="tab" href="#orders-rollover" role="tab" aria-controls="orders-rollover" aria-selected="false">Roll Over</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-settled-tab" data-bs-toggle="tab" href="#orders-settled" role="tab" aria-controls="orders-settled" aria-selected="false">Settled</a>
+				</nav>
+				
+				
+				<div class="tab-content" id="orders-table-tab-content"  >
+					<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+						<div class="app-card app-card-orders-table shadow-sm mb-5">
+							<div class="app-card-body">
+								<div class="table-responsive">
+									<table class="table app-table-hover mb-0 text-center"  id="app-table">
+										{% include 'messages.html' %}
+										<thead>
+											
+											<tr>
+												<th class="cell">Id</th>
+												<th class="cell">Name</th>
+												<th class="cell">Contact</th>
+												<th class="cell">Location</th>
+												<th class="cell">Quantity</th>
+												<th class="cell">Date</th>
+												<th class="cell">Status</th>
+												<th class="cell">Amount Paid</th>
+												<th class="cell"></th>
+											</tr>
+										</thead> 
+										<tbody>
+											{%if order.count %}
+											{%for orders in page_object%}
+											
+											<tr>
+												<td class="cell">{{orders.id}}</td>
+												<td class="cell"><span class="truncate">{{orders.name}}</span></td>
+												<td class="cell">{{orders.contact}}</td>
+												<td class="cell"><span>{{orders.location}}</span><span class="note">(description)</span></td>
+												<td class="cell">{{orders.quantity}}Pcs</td>
+												<td class="cell"><span>{{orders.date_ordered}}</span><span class="note">{{orders.date_due}}</</span></td>
+												{%if orders.status == 'Pending' %}
+												<td class="cell"><span class="badge bg-warning">{{orders.status}}</span></td>
+												{%endif%}
+												{%if orders.status == 'Settled' %}
+												<td class="cell"><span class="badge bg-success">{{orders.status}}</span></td>
+												{%endif%}
+												{%if orders.status == 'RollOver' %}
+												<td class="cell"><span class="badge bg-danger">{{orders.status}}</span></td>
+												{%endif%}
+
+												<td class="cell"><span>{{orders.amount}}</span><span class="note">{{orders.pay_form}}</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'edit' orders.id %}">View</a></td>
+											</tr> 
+											{%endfor%}
+											{%endif%}
+		
+										</tbody> 
+									</table>
+									<p class="no-results" style="display: none;">No results </p>
+									
+									<div class="table-output" id="ordersTable" data-edit-url="{% url 'edit'  %}">
+										<table class="table mb-0 text-left">
+											{% include 'messages.html' %}
+											<thead>
+												
+												<tr>
+													<th class="cell">Id</th>
+													<th class="cell">Name</th>
+													<th class="cell">Contact</th>
+													<th class="cell">Location</th>
+													<th class="cell">Quantity</th>
+													<th class="cell">Date</th>
+													<th class="cell">Status</th>
+													<th class="cell">Amount Paid</th>
+													<th class="cell"></th>
+												</tr>
+											</thead> 
+											<tbody class="table-body">
+												
+											</tbody> 
+										</table>
+																
+
+									</div>
+								</div><!--//table-responsive-->
+							
+							</div><!--//app-card-body-->		
+						</div><!--//app-card-->
+					   
+						<div class="pagination-container" >
+							<nav class="app-pagination">
+								<ul class="pagination justify-content-center">
+								{% if page_object.has_previous %}
+									<li class="page-item">
+										<a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href="?page={{ page_object.previous_page_number }}">Previous</a>
+									</li>
+								{% endif %}
+							
+								{% for page_num in page_object.paginator.page_range %}
+									<li class="page-item {% if page_num == page_object.number %}active{% endif %}">
+										<a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+									</li>
+								{% endfor %}
+							
+								{% if page_object.has_next %}
+									<li class="page-item">
+										<a class="page-link" href="?page={{ page_object.next_page_number }}">Next</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href="?page={{ page_object.paginator.num_pages }}">Last</a>
+									</li>
+								{% endif %}
+								</ul>
+							</nav><!--//app-pagination  {%if page_object.number == 1%}  {%endif%}  -->
+
+						</div>	
+						
+					</div><!--//tab-pane-->
+					
+					<div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
+						<div class="app-card app-card-orders-table mb-5">
+							<div class="app-card-body">
+								<div class="table-responsive">
+									
+									<table class="table mb-0 text-left">
+										<thead>
+											
+											<tr>
+												<th class="cell">Id</th>
+												<th class="cell">Name</th>
+												<th class="cell">Contact</th>
+												<th class="cell">Location</th>
+												<th class="cell">Quantity</th>
+												<th class="cell">Date</th>
+												<th class="cell">Status</th>
+												<th class="cell">Amount Paid</th>
+												<th class="cell"></th>
+											</tr>
+										</thead> 
+										<tbody>
+											{%if order.count %}
+											{%for orders in order%}
+											{%if orders.status == 'Pending' %}
+											<tr>
+												
+												<td class="cell">{{orders.id}}</td>
+												<td class="cell"><span class="truncate">{{orders.name}}</span></td>
+												<td class="cell">{{orders.contact}}</td>
+												<td class="cell"><span>{{orders.location}}</span><span class="note">(description)</span></td>
+												<td class="cell">{{orders.quantity}}Pcs</td>
+												<td class="cell"><span>{{orders.date_ordered}}</span><span class="note">{{orders.date_due}}</</span></td>
+												<td class="cell"><span class="badge bg-warning">{{orders.status}}</span></td>
+												<td class="cell"><span>{{orders.amount}}</span><span class="note">{{orders.pay_form}}</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'edit' orders.id %}">View</a></td>
+											</tr>
+											{%endif%} 
+											{%endfor%}
+											{%endif%}
+										</tbody> 	
+									</table>
+								</div><!--//table-responsive -->
+							</div> <!--//app-card-body -->
+						</div>	<!--//app-card-->				
+					</div>  <!--
+						<nav class="app-pagination">
+							<ul class="pagination justify-content-center">
+							{% if page_object2.has_previous %}
+								<li class="page-item">
+									<a class="page-link" href="{% url 'rollover' %}?page=1" tabindex="-1" aria-disabled="true">First</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="{% url 'rollover' %}?page={{ page_object2.previous_page_number }}">Previous</a>
+								</li>
+							{% endif %}
+						
+							{% for page_num in page_object2.paginator.page_range %}
+								<li class="page-item {% if page_num == page_object2.number %}active{% endif %}">
+									<a class="page-link" href="{% url 'rollover' %}?page={{ page_num }}">{{ page_num }}</a>
+								</li>
+							{% endfor %}
+						
+							{% if page_object2.has_next %}
+								<li class="page-item">
+									<a class="page-link" href="{% url 'rollover' %}?page={{ page_object2.next_page_number }}">Next</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="{% url 'rollover' %}?page={{ page_object2.paginator.num_pages }}">Last</a>
+								</li>
+							{% endif %}
+							</ul>
+						</nav>  //app-pagination
+						//app-card-->
+					
+					
+					<div class="tab-pane fade" id="orders-rollover" role="tabpanel" aria-labelledby="orders-rollover-tab">
+						<div class="app-card app-card-orders-table mb-5">
+							<div class="app-card-body">
+								<div class="table-responsive">
+									<table class="table mb-0 text-left">
+										<thead>
+											
+											<tr>
+												<th class="cell">Id</th>
+												<th class="cell">Name</th>
+												<th class="cell">Contact</th>
+												<th class="cell">Location</th>
+												<th class="cell">Quantity</th>
+												<th class="cell">Date</th>
+												<th class="cell">Status</th>
+												<th class="cell">Amount Paid</th>
+												<th class="cell"></th>
+											</tr>
+										</thead> 
+										<tbody>
+											{%if order.count %}
+											{%for orders in order%}
+											{%if orders.status == 'RollOver' %}
+											<tr>
+												
+												<td class="cell">{{orders.id}}</td>
+												<td class="cell"><span class="truncate">{{orders.name}}</span></td>
+												<td class="cell">{{orders.contact}}</td>
+												<td class="cell"><span>{{orders.location}}</span><span class="note">(description)</span></td>
+												<td class="cell">{{orders.quantity}}Pcs</td>
+												<td class="cell"><span>{{orders.date_ordered}}</span><span class="note">{{orders.date_due}}</</span></td>
+												<td class="cell"><span class="badge bg-danger">{{orders.status}}</span></td>
+												<td class="cell"><span>{{orders.amount}}</span><span class="note">{{orders.pay_form}}</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'edit' orders.id %}">View</a></td>
+											</tr>
+											{%endif%} 
+											{%endfor%}
+											{%endif%}  
+										</tbody> 	
+									</table>
+								</div><!--//table-responsive-->
+							</div><!--//app-card-body-->		
+						</div><!--//app-card-->
+					</div><!--//tab-pane-->
+					<div class="tab-pane fade" id="orders-settled" role="tabpanel" aria-labelledby="orders-settled-tab">
+						<div class="app-card app-card-orders-table mb-5">
+							<div class="app-card-body">
+								<div class="table-responsive">
+									<table class="table mb-0 text-left">
+										<thead>
+											
+											<tr>
+												<th class="cell">Id</th>
+												<th class="cell">Name</th>
+												<th class="cell">Contact</th>
+												<th class="cell">Location</th>
+												<th class="cell">Quantity</th>
+												<th class="cell">Date</th>
+												<th class="cell">Status</th>
+												<th class="cell">Amount Paid</th>
+												<th class="cell"></th>
+											</tr>
+										</thead> 
+										<tbody>
+											{%if order.count %}
+											{%for orders in order%}
+											{%if orders.status == 'Settled'%}
+											<tr>
+												
+												<td class="cell">{{orders.id}}</td>
+												<td class="cell"><span class="truncate">{{orders.name}}</span></td>
+												<td class="cell">{{orders.contact}}</td>
+												<td class="cell"><span>{{orders.location}}</span><span class="note">(description)</span></td>
+												<td class="cell">{{orders.quantity}}Pcs</td>
+												<td class="cell"><span>{{orders.date_ordered}}</span><span class="note">{{orders.date_due}}</</span></td>
+												<td class="cell"><span class="badge bg-success">{{orders.status}}</span></td>
+												<td class="cell"><span>{{orders.amount}}</span><span class="note">{{orders.pay_form}}</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'edit' orders.id %}">View</a></td>
+											</tr>
+											{%endif%}
+											{%endfor%}
+											{%endif%} 
+										</tbody> 
+									</table>
+								</div><!--//table-responsive-->
+							</div><!--//app-card-body-->		
+						</div><!--//app-card-->
+					</div><!--//tab-pane-->
+				</div><!--//tab-content-->
+			    
+				
+				
+			    
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content-->
+	    
+	    
+	    
+    </div><!--//app-wrapper-->    					
+
+ 
+    <!-- Javascript -->          
+    <script src="{% static 'plugins/popper.min.js' %}"></script>
+	<script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+	
+
+	<!-- Page Specific JS -->
+	<script src="{% static 'js/app.js' %}"></script>
+	<script src="{% static 'js/search-orders.js' %}"></script>
+	
+
+</body>
+</html> 
+
