@@ -11,7 +11,7 @@ urlpatterns = [
      path('export/',views.export_excel, name='excel' ),
     
     path('login/',views.login, name='login'),
-     path('activate/',views.activate, name='activate'),
+     path('verify_otp/',views.verify_otp, name='verify_otp'),
     path('notifications/',views.notifications, name='notifications' ),
     path('orders/',views.orders, name='orders' ),
     path('reset/',views.reset, name='reset' ),

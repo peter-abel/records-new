@@ -32,6 +32,14 @@ class Status(models.Model):
 
 
 
+class Profile(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.TextField() 
+    password = models.TextField()  
+    owner = models.ForeignKey(to=User, on_delete=models.CASCADE)      
+
+
+
 
 class Payment(models.Model):
      name =  models.CharField(max_length=30)       

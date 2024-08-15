@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from django.contrib import messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,7 +79,7 @@ WSGI_APPLICATION = "Records.wsgi.application"
 
 
 
-
+"""
 
 DATABASES = {
     'default': {
@@ -90,11 +91,7 @@ DATABASES = {
         'PORT': '49426',
     }
 }
-"""sumary_line
-
-Keyword arguments:
-argument -- description
-Return: return_description
+"""
 
 
 
@@ -106,7 +103,7 @@ DATABASES = {
     }
 }
 
-"""
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -152,3 +149,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build','static')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+MESSAGE_TAGS={
+    messages.ERROR:'danger'
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Or your email provider's SMTP server
+EMAIL_PORT = 587  # This is the default port for TLS
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'peterabel791@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_app_password'  # Use an app password if you're using Gmail

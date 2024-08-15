@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import  Status, NewOrder, Payment
+from .models import  Status, NewOrder, Payment, Profile
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
@@ -12,6 +12,8 @@ from django.conf import settings
 from django.contrib import messages
 import random
 import string
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 
 # Create your views here.
@@ -61,9 +63,7 @@ def login(request):
     return render(request, "login.html")
 
 
-def activate(request):
 
-    return render(request, "activate.html")
 
 def notifications(request):
 
@@ -110,15 +110,28 @@ def generate_otp():
 
 def signup(request):
      if request.method == 'POST':
-        #username = request.POST['username']
+        username = request.POST['name']
+       
         email = request.POST['email']
         password = request.POST['password']
         
-        if  User.objects.filter(email=email).exists():
+        # Validate email format
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'Invalid email format')
+            return redirect('signup')
+        
+        # Check if email already exists
+        
+        if Profile.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists')
             return redirect('signup')
         
-        user = User.objects.create_user(email=email, password=password)
+        # For debugging: print email to console
+        print(f"Attempting to register with email: {email}")
+        
+        user = User.objects.create_user( username=username, email=email, password=password)
         user.is_active = False
         user.save()
         
@@ -127,19 +140,24 @@ def signup(request):
         request.session['user_id'] = user.id
         
         # Send OTP via email
-        send_mail(
-            'Your OTP for Registration',
-            f'Your OTP is: {otp}',
-            settings.EMAIL_HOST_USER,
-            [email],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                'Your OTP for Registration',
+                f'Your OTP is: {otp}',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            print(f"Error sending email: {str(e)}")
+            messages.error(request, 'Error sending OTP email. Please try again.')
+            user.delete()  # Remove the user if email fails
+            return redirect('signup')
         
         return redirect('verify_otp')
     
-   
+     return render(request, 'signup.html')
 
-     return render(request, "signup.html")
 
 def verify_otp(request):
     if request.method == 'POST':
