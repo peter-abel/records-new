@@ -14,6 +14,7 @@ import random
 import string
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.contrib.auth import authenticate, login
 
 
 # Create your views here.
@@ -59,8 +60,35 @@ def wallet(request):
 
 
 def login(request):
+     if request == 'POST':
+        context = {
+                'data': request.POST,
+                'has_error': False
+            }
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        if email == '':
+            messages.add_message(request, messages.ERROR,
+                                'Email is required')
+            context['has_error'] = True
+        if password == '':
+            messages.add_message(request, messages.ERROR,
+                                'Password is required')
+            context['has_error'] = True
+        user = authenticate(request, username=email, password=password)
+    
+        if not user and not context['has_error']:
+            messages.add_message(request, messages.ERROR, 'Invalid login')
+            context['has_error'] = True
 
-    return render(request, "login.html")
+        if context['has_error']:
+            return render(request, 'login.html', status=401, context=context)
+        login(request, user)
+    
+
+
+     return render(request, "login.html")
 
 
 

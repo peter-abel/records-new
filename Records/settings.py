@@ -7,7 +7,8 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/4.2/ref/settings/
+https://docs.djangoproject.com/en/4.2/ref/settings
+
 """
 
 import os
@@ -160,4 +161,4 @@ EMAIL_HOST = 'smtp.gmail.com'  # Or your email provider's SMTP server
 EMAIL_PORT = 587  # This is the default port for TLS
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'peterabel791@gmail.com'
-EMAIL_HOST_PASSWORD = 'your_app_password'  # Use an app password if you're using Gmail
+EMAIL_HOST_PASSWORD = 'hewy tqor okij sjss'  # Use an app password if you're using Gmail
