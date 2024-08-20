@@ -10,8 +10,9 @@ urlpatterns = [
     path('wallet/',views.wallet, name='wall' ),
      path('export/',views.export_excel, name='excel' ),
     
-    path('login/',views.login, name='login'),
-     path('verify_otp/',views.verify_otp, name='verify_otp'),
+    path('login/',views.user_login, name='user_login'),
+    path('logout/', views.user_logout, name='logout'), 
+    path('verify_otp/',views.verify_otp, name='verify_otp'),
     path('notifications/',views.notifications, name='notifications' ),
     path('orders/',views.orders, name='orders' ),
     path('reset/',views.reset, name='reset' ),

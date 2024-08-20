@@ -14,7 +14,8 @@ import random
 import string
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
 
 
 # Create your views here.
@@ -59,45 +60,50 @@ def wallet(request):
 
 
 
-def login(request):
-     if request == 'POST':
+def user_login(request):
+    if request.method == 'POST':
         context = {
-                'data': request.POST,
-                'has_error': False
-            }
+            'data': request.POST,
+            'has_error': False
+        }
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
-        if email == '':
-            messages.add_message(request, messages.ERROR,
-                                'Email is required')
+
+        if not email:
+            messages.error(request, 'Email is required')
             context['has_error'] = True
-        if password == '':
-            messages.add_message(request, messages.ERROR,
-                                'Password is required')
-            context['has_error'] = True
-        user = authenticate(request, username=email, password=password)
-    
-        if not user and not context['has_error']:
-            messages.add_message(request, messages.ERROR, 'Invalid login')
+
+        if not password:
+            messages.error(request, 'Password is required')
             context['has_error'] = True
 
         if context['has_error']:
+            return render(request, 'login.html', status=400, context=context)
+
+        # Authenticate using email
+        user = authenticate(request, username=email, password=password)
+
+        if user is None:
+            user_exists = User.objects.filter(email=email).exists()
+            if user_exists:
+                messages.error(request, 'Incorrect password. Please try again.')
+            else:
+                messages.error(request, 'No account found with this email address')
             return render(request, 'login.html', status=401, context=context)
+
         login(request, user)
-    
+        return redirect('home')
 
-
-     return render(request, "login.html")
-
-
+    return render(request, "login.html")
 
 
 def notifications(request):
 
     return render(request, "notifications.html")
 
-
+def user_logout(request):
+    logout(request)
+    return redirect('login') 
 
 
 def orders(request):
@@ -137,36 +143,35 @@ def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
 
 def signup(request):
-     if request.method == 'POST':
+    if request.method == 'POST':
         username = request.POST['name']
-       
         email = request.POST['email']
         password = request.POST['password']
-        
+
         # Validate email format
         try:
             validate_email(email)
         except ValidationError:
             messages.error(request, 'Invalid email format')
             return redirect('signup')
-        
-        # Check if email already exists
-        
-        if Profile.objects.filter(email=email).exists():
+
+        # Check if username or email already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists')
+            return redirect('signup')
+
+        if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists')
             return redirect('signup')
-        
-        # For debugging: print email to console
-        print(f"Attempting to register with email: {email}")
-        
-        user = User.objects.create_user( username=username, email=email, password=password)
-        user.is_active = False
-        user.save()
-        
+
         otp = generate_otp()
         request.session['otp'] = otp
-        request.session['user_id'] = user.id
-        
+        request.session['user_data'] = {
+            'username': username,
+            'email': email,
+            'password': password
+        }
+
         # Send OTP via email
         try:
             send_mail(
@@ -179,35 +184,52 @@ def signup(request):
         except Exception as e:
             print(f"Error sending email: {str(e)}")
             messages.error(request, 'Error sending OTP email. Please try again.')
-            user.delete()  # Remove the user if email fails
             return redirect('signup')
-        
+
         return redirect('verify_otp')
-    
-     return render(request, 'signup.html')
+
+    return render(request, 'signup.html')
 
 
 def verify_otp(request):
     if request.method == 'POST':
         user_otp = request.POST['otp']
         stored_otp = request.session.get('otp')
-        user_id = request.session.get('user_id')
-        
+        user_data = request.session.get('user_data')
+
         if user_otp == stored_otp:
-            user = User.objects.get(id=user_id)
-            user.is_active = True
-            user.save()
-            
+            # Check if the user already exists (due to a previous failed attempt)
+            if User.objects.filter(username=user_data['username']).exists():
+                messages.error(request, 'This username has already been registered.')
+                return redirect('signup')
+
+            if User.objects.filter(email=user_data['email']).exists():
+                messages.error(request, 'This email has already been registered.')
+                return redirect('signup')
+
+            # Try creating the user
+            try:
+                user = User.objects.create_user(
+                    username=user_data['username'],
+                    email=user_data['email'],
+                    password=user_data['password']
+                )
+                user.is_active = True
+                user.save()
+            except IntegrityError:
+                messages.error(request, 'An error occurred during registration. Please try again.')
+                return redirect('signup')
+
+            # Clear session data after successful registration
             del request.session['otp']
-            del request.session['user_id']
-            
+            del request.session['user_data']
+
             messages.success(request, 'Registration successful. You can now log in.')
-            return redirect('login')
+            return redirect('user_login')
         else:
             messages.error(request, 'Invalid OTP. Please try again.')
-    
-    return render(request, 'verify_otp.html')
 
+    return render(request, 'verify_otp.html')
 
 def new_edit(request,id):
     order = NewOrder.objects.get(pk=id)

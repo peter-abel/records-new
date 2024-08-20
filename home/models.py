@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import User
+from django.contrib.auth.backends import ModelBackend
+
 
 # Create your models here.
 class NewOrder(models.Model):
@@ -42,4 +44,5 @@ class Profile(models.Model):
 
 
 class Payment(models.Model):
-     name =  models.CharField(max_length=30)       
+     name =  models.CharField(max_length=30)   
+
