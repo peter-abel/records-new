@@ -20,7 +20,7 @@ from django.db import IntegrityError
 
 # Create your views here.
       
-
+#search view
 def search_orders(request):
     if request.method == 'POST':
         search_str = json.loads(request.body).get('searchText')
