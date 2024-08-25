@@ -3,9 +3,9 @@ boto3==1.34.11
 botocore==1.34.11
 Django==4.2.2
 django-storages==1.14.2
-greenlet==2.0.2
+#greenlet==2.0.2
 jmespath==1.0.1
-lxml==4.9.2
+#lxml==4.9.2
 Pillow==10.1.0
 playwright==1.35.0
 psycopg2-binary==2.9.9

@@ -103,7 +103,7 @@ def notifications(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('login') 
+    return redirect('user_login') 
 
 
 def orders(request):
