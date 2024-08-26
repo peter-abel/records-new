@@ -41,7 +41,7 @@ def home(request):
     
 
 
-    return render(request, "orders.html")
+    return render(request, "index.html")
 
 def sos(request,exception):
 
