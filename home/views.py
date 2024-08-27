@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import  Status, NewOrder, Payment, Profile
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -16,24 +16,36 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
 
 
 # Create your views here.
       
-#search view
+@login_required
 def search_orders(request):
     if request.method == 'POST':
         search_str = json.loads(request.body).get('searchText')
-        orders = NewOrder.objects.filter(
-            name__icontains=search_str) | NewOrder.objects.filter(
-            contact__istartswith=search_str) | NewOrder.objects.filter(
-            location__icontains=search_str) | NewOrder.objects.filter(
-            date_ordered__istartswith=search_str) | NewOrder.objects.filter(
-            status__icontains=search_str) | NewOrder.objects.filter(
-            amount__icontains=search_str)| NewOrder.objects.filter(
-            id__istartswith=search_str)
+        
+        # Filter orders for the current user
+        user_orders = NewOrder.objects.filter(owner=request.user)
+        
+        # Apply search filters on user's orders
+        orders = user_orders.filter(
+            Q(name__icontains=search_str) |
+            Q(contact__istartswith=search_str) |
+            Q(location__icontains=search_str) |
+            Q(date_ordered__istartswith=search_str) |
+            Q(status__icontains=search_str) |
+            Q(amount__icontains=search_str) |
+            Q(id__istartswith=search_str)
+        )
+        
         data = orders.values()
         return JsonResponse(list(data), safe=False)
+    
+    return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
 
@@ -107,30 +119,34 @@ def user_logout(request):
 
 
 def orders(request):
+    if request.user.is_authenticated:
 
-    order = NewOrder.objects.all()
-    statusy = Status.objects.all()
-    payment  = Payment.objects.all()
+        order = NewOrder.objects.filter(owner=request.user).order_by('-date_ordered')    
+        statusy = Status.objects.all()
+        payment  = Payment.objects.all()
+
+        
+
+        #Paginators ALL section
+        paginator = Paginator(order, 10)
+        page_number = request.GET.get('page')
+        try:
+            page_object = paginator.page(page_number)
+        except (PageNotAnInteger, EmptyPage):
+            page_object = paginator.page(1)
+        #page_object = Paginator.get_page(paginator,page_number)
+        #mandevu = NewOrder.objects.filter(owner=request.user)
+        context = {
+            'order' : order,
+            'statusy': statusy,
+            'page_object': page_object,
+            'payment': payment
+        }
+    else:
+        messages.error(request, "You need to be logged in to view orders.")
+        return redirect('home')  # Redirect to your login page    
 
     
-
-    #Paginators ALL section
-    paginator = Paginator(order, 10)
-    page_number = request.GET.get('page')
-    try:
-        page_object = paginator.page(page_number)
-    except (PageNotAnInteger, EmptyPage):
-        page_object = paginator.page(1)
-    #page_object = Paginator.get_page(paginator,page_number)
-    #mandevu = NewOrder.objects.filter(owner=request.user)
-    context = {
-        'order' : order,
-        'statusy': statusy,
-        'page_object': page_object,
-        'payment': payment
-    }
-
-  
     
 
     return render(request, "orders.html",context)
@@ -232,9 +248,11 @@ def verify_otp(request):
     return render(request, 'verify_otp.html')
 
 def new_edit(request,id):
-    order = NewOrder.objects.get(pk=id)
+
+    order = get_object_or_404(NewOrder, pk=id, owner=request.user)
+    
     statusy = Status.objects.all()
-    payment  = Payment.objects.all()
+    payment = Payment.objects.all()
 
     context = {
         'order': order,
@@ -315,7 +333,7 @@ def new_edit(request,id):
 
  
 
-
+@login_required
 def form(request):
 
     statusy = Status.objects.all()
@@ -402,7 +420,9 @@ def form(request):
                                 date_due=date_due,
                                 status=status,
                                 pay_form=pay_form,
-                                amount=amount
+                                amount=amount,
+                                owner=request.user  # This line associates the order with the current user
+
                                 )
         messages.success(request, "order successfully added")
         return redirect('orders')
